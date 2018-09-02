@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './WeatherStyle.css'
+
 const WeatherForm = ({ onSearch }) => {
 
   let location
@@ -12,7 +14,7 @@ const WeatherForm = ({ onSearch }) => {
   return (
     <div>
       <form onSubmit={onFormSubmit}>
-        <input type='text' ref={el => location = el}/>
+        <input type='text' ref={el => location = el} className='searchInput'/><br/>
         <button>Get Weather</button>
       </form>
     </div>
