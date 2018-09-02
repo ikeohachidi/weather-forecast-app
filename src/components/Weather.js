@@ -3,6 +3,8 @@ import React, {Component} from 'react'
 import GetForecast from '../api/GetForecast'
 import WeatherForm from './WeatherForm'
 
+import './WeatherStyle.css'
+
 export default class Weather extends Component {
   constructor() {
     super()
@@ -87,10 +89,10 @@ export default class Weather extends Component {
           {dayVal.map((day) => {
             if (day.date !== undefined) {
               return (
-                <ul>
-                  <li><b>{day.date}</b></li>
-                  <li>{day.maxTemp}</li>
-                  <li>{day.minTemp}</li>
+                <ul className="weatherRender">
+                  <li><b>Date: {day.date}</b></li>
+                  <li>Max Temp: {day.maxTemp}</li>
+                  <li>Min Temp{day.minTemp}</li>
                   <li><img src={`http://openweathermap.org/img/w/${day.weatherIcon}.png`} alt="weather icon"/></li>
                 </ul>
               )
