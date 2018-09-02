@@ -1,74 +1,64 @@
-import React from 'react'
+import React, {Component} from 'react'
 
 import GetForecast from '../api/GetForecast'
+import WeatherForm from './WeatherForm'
 
-const Weather = () => {
-  
-  let location
-
-  let days = {
-    day1: {},
-    day2: {},
-    day3: {},
-    day4: {},
-    day5: {}
+export default class Weather extends Component {
+  constructor() {
+    super()
+    this.handleSearch = this.handleSearch.bind(this)
+    this.state = { days: {} }
   }
-  
-  let soon = []
 
-  const onFormSubmit = (e) => {
-    e.preventDefault();
-    GetForecast(location.value)
-      .then((res) => {
-        let weatherInfo = res.list
-        // let day
-        
-        // let newTemp = []
-        // for (let i in days) {
-        //   for (let j in weatherInfo) {
-        //     if (weatherInfo[count].dt_txt != day) {
-        //       day = weatherInfo[count].dt_txt.match(/\d{4}-\d{2}-\d{2}/)[0]
-        //       console.log('----', day)
-        //       newTemp.push(weatherInfo[j].main.temp_max)
-        //       count++
-        //     } else {
-        //       console.log("xxxxx", day)
-        //       break;
-        //     }
-        //   } // end of second j for loop
-        // } // end of first i for loop
-
-        let day = weatherInfo[0].dt_txt.match(/\d{4}-\d{2}-\d{2}/)[0]
-        let count = 0;
-        let newTemp = []
-
-        for (let i in days) {
-          while(count <= weatherInfo.length) {
-            if (day == weatherInfo[count].dt_txt.match(/\d{4}-\d{2}-\d{2}/)[0]) {
-              newTemp.push(weatherInfo[count].main.temp_max)
-              days[i].maxTemp = Math.max(...newTemp)
-            } else {
-              newTemp = []
-              day = weatherInfo[count].dt_txt.match(/\d{4}-\d{2}-\d{2}/)[0];
-              break;
-            }
-            count++
-          } // end of while for loop
-        } // end of i for loop
-
-      }).catch((error) => {
+  handleSearch(location) {
+    console.log(location)
+    GetForecast(location)
+      .then(res => {
+        console.log(res.list)
+      })
+      .catch(error => {
         console.log(error)
       })
   }
 
-  return (
-    <div>
-      <form onSubmit={onFormSubmit}>
-        <input type="text" ref={el => location = el}/>
-        <button>Get Weather</button>
-      </form>
-    </div>
-  )
+  render() {
+    return (
+      <div>
+        <WeatherForm onSearch={this.handleSearch}/>
+        {this.state.newLocation}
+      </div>
+    )
+  }
 }
 
-export default Weather;
+
+
+
+// for (let i in this.state.days) {
+//   while(count <= weatherInfo.length) {
+//     if (day === weatherInfo[count].dt_txt.match(/\d{4}-\d{2}-\d{2}/)[0]) {
+
+//       dayMaxTemp.push(weatherInfo[count].main.temp_max)
+//       dayMinTemp.push(weatherInfo[count].main.temp_min)
+//       dayWeather.push(weatherInfo[count].weather[0].description)
+//       dayIcon.push(weatherInfo[count].weather[0].icon)
+
+//       this.state.days[i].date = day
+//       this.state.days[i].weatherDescription = dayWeather[1]
+//       this.state.days[i].maxTemp = Math.max(...dayMaxTemp)
+//       this.state.days[i].minTemp = Math.max(...dayMinTemp)
+//       this.state.days[i].weatherIcon = dayIcon[1]
+
+//       console.log(this.state)
+
+//     } else {
+//       dayMaxTemp = []
+//       dayMinTemp = []
+//       dayWeather = []
+//       dayIcon = []
+//       day = weatherInfo[count].dt_txt.match(/\d{4}-\d{2}-\d{2}/)[0];
+//       break;
+//     }
+//     count++
+//   } // end of while for loop
+// } // end of i for loop
