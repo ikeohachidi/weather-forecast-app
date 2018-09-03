@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 // API_KEY should be gotten from openweathermap user dashboard when signed in
-const API_KEY = 'c7f42dff99a576f1eab8a55f0f7f1411';
+const API_KEY = ; // place api key here
 const weatherMapURL = `http://api.openweathermap.org/data/2.5/forecast?&appid=${API_KEY}&units=metric`
 
 function GetForecast(location) {
